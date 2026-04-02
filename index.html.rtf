@@ -1,0 +1,546 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2868
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww29700\viewh16320\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 import React, \{ useState, useRef, useEffect \} from 'react';\
+import \{ BookOpen, GraduationCap, History, MousePointerClick, X, Languages, Info, FileText, Map, Leaf, Palette, AlignLeft, Volume2, VolumeX \} from 'lucide-react';\
+\
+const App = () => \{\
+  const [source, setSource] = useState(1);\
+  const [level, setLevel] = useState('A1');\
+  const [activeWord, setActiveWord] = useState(null);\
+  const [isReadingFull, setIsReadingFull] = useState(false);\
+  const containerRef = useRef(null);\
+  const textContentRef = useRef(null);\
+\
+  // Vocabulary data (English to Dutch for CLIL support)\
+  const dictionary = \{\
+    "skull": \{ nl: "schedel", fr: "cr\'e2ne", info: "The bones of the head." \},\
+    "species": \{ nl: "soort", fr: "esp\'e8ce", info: "A group of living things (like humans or animals)." \},\
+    "discovery": \{ nl: "ontdekking", fr: "d\'e9couverte", info: "Finding something new." \},\
+    "fossils": \{ nl: "fossielen", fr: "fossiles", info: "Old remains of plants or animals in rock." \},\
+    "modern human": \{ nl: "de moderne mens", fr: "humain moderne", info: "People like us (Homo sapiens)." \},\
+    "chin": \{ nl: "kin", fr: "menton", info: "The part of your face below your mouth." \},\
+    "ancestor": \{ nl: "voorouder", fr: "anc\'eatre", info: "A family member from a long time ago." \},\
+    "family tree": \{ nl: "stamboom", fr: "arbre g\'e9n\'e9alogique", info: "A diagram showing family history." \},\
+    "jaw": \{ nl: "kaak", fr: "m\'e2choire", info: "The bone used for eating and speaking." \},\
+    "researchers": \{ nl: "onderzoekers", fr: "chercheurs", info: "People who study things to find facts." \},\
+    "remarkable": \{ nl: "opmerkelijk", fr: "remarquable", info: "Something very special or unusual." \},\
+    "characteristics": \{ nl: "kenmerken", fr: "caract\'e9ristiques", info: "Typical qualities of something." \},\
+    "determined": \{ nl: "vastgesteld / bepaald", fr: "d\'e9termin\'e9", info: "Decided or discovered for sure." \},\
+    "previous": \{ nl: "vorige", fr: "pr\'e9c\'e9dent", info: "The one before this one." \},\
+    "compared": \{ nl: "vergeleken", fr: "compar\'e9", info: "Looking at two things to see differences." \},\
+    "direct ancestor": \{ nl: "directe voorouder", fr: "anc\'eatre direct", info: "A family member you come from directly." \},\
+    "origin": \{ nl: "oorsprong", fr: "origine", info: "Where something starts or comes from." \},\
+    "confirmed": \{ nl: "bevestigd", fr: "confirm\'e9", info: "Shown to be true." \},\
+    "theory": \{ nl: "theorie", fr: "th\'e9orie", info: "An idea that explains how something works." \},\
+    "concurrently": \{ nl: "tegelijkertijd", fr: "simultan\'e9ment", info: "At the same time." \},\
+    "ancient relative": \{ nl: "oude verwant", fr: "ancien parent", info: "A family member from a very long time ago." \},\
+    "vertebrae": \{ nl: "wervels", fr: "vert\'e8bres", info: "The bones in the back (spine)." \},\
+    "international team": \{ nl: "internationaal team", fr: "\'e9quipe internationale", info: "Scientists from many different countries." \},\
+    "climbed": \{ nl: "klom", fr: "grimp\'e9", info: "Moved up using hands and feet." \},\
+    "ape": \{ nl: "aap", fr: "singe", info: "An animal like a chimpanzee or gorilla." \},\
+    "food waste": \{ nl: "voedselverspilling", fr: "gaspillage alimentaire", info: "Food that is thrown away instead of eaten." \},\
+    "households": \{ nl: "huishoudens", fr: "m\'e9nages", info: "People living together in a house." \},\
+    "reduction": \{ nl: "vermindering", fr: "r\'e9duction", info: "Making something smaller or less." \},\
+    "economic loss": \{ nl: "economisch verlies", fr: "perte \'e9conomique", info: "Losing money in a business or country." \},\
+    "environment": \{ nl: "milieu", fr: "environnement", info: "The natural world around us (air, water, land)." \},\
+    "proposal": \{ nl: "voorstel", fr: "proposition", info: "A plan or suggestion for people to consider." \},\
+    "sustainable": \{ nl: "duurzaam", fr: "durable", info: "Good for the planet so it can last a long time." \},\
+    "agriculture": \{ nl: "landbouw", fr: "agriculture", info: "Farming and growing food." \},\
+    "annually": \{ nl: "jaarlijks", fr: "annuellement", info: "Happening every year." \},\
+    "cave paintings": \{ nl: "rotstekeningen / grottekeningen", fr: "peintures rupestres", info: "Ancient art painted on the walls of a cave." \},\
+    "island": \{ nl: "eiland", fr: "\'eele", info: "A piece of land surrounded by water." \},\
+    "uranium dating": \{ nl: "uraniumdatering", fr: "datation \'e0 l'uranium", info: "A scientific method to find out how old something is." \},\
+    "originated": \{ nl: "ontstond", fr: "originaire", info: "Where or how something began." \},\
+    "spread": \{ nl: "verspreidde", fr: "r\'e9pandu", info: "Moved to many different places." \},\
+    "ancient": \{ nl: "eeuwenoud", fr: "ancien", info: "From a very long time ago in history." \},\
+    "descendants": \{ nl: "nakomelingen", fr: "descendants", info: "People who come from a specific ancestor." \},\
+    "undiscovered": \{ nl: "onontdekt", fr: "non d\'e9couvert", info: "Something that has not been found yet." \},\
+    "hominin": \{ nl: "mensachtige", fr: "hominine", info: "A human-like species from history." \},\
+    "descends": \{ nl: "stamt af", fr: "descend", info: "Comes from a previous generation or species." \}\
+  \};\
+\
+  useEffect(() => \{\
+    // Pre-load voices for the Web Speech API (voorkomt vertraging bij de eerste klik)\
+    const loadVoices = () => \{\
+      if ('speechSynthesis' in window) \{\
+        window.speechSynthesis.getVoices();\
+      \}\
+    \};\
+    loadVoices();\
+    if ('speechSynthesis' in window) \{\
+      window.speechSynthesis.onvoiceschanged = loadVoices;\
+    \}\
+\
+    const handleClickOutside = (event) => \{\
+      if (containerRef.current && !containerRef.current.contains(event.target)) \{\
+        setActiveWord(null);\
+      \}\
+    \};\
+    document.addEventListener('mousedown', handleClickOutside);\
+    return () => \{\
+      document.removeEventListener('mousedown', handleClickOutside);\
+      if ('speechSynthesis' in window) \{\
+        window.speechSynthesis.onvoiceschanged = null;\
+        window.speechSynthesis.cancel();\
+      \}\
+    \};\
+  \}, []);\
+\
+  // Stop met voorlezen als de bron of het niveau verandert\
+  useEffect(() => \{\
+    if ('speechSynthesis' in window) \{\
+      window.speechSynthesis.cancel();\
+      setIsReadingFull(false);\
+    \}\
+  \}, [source, level]);\
+\
+  const speakWord = (text, e) => \{\
+    e.stopPropagation(); // Voorkomt dat de klik doordrukt en de vertaling opent\
+    if ('speechSynthesis' in window) \{\
+      window.speechSynthesis.cancel(); // Stop eventuele huidige audio\
+      setIsReadingFull(false); // Update state voor volledige tekst knop\
+      \
+      const utterance = new SpeechSynthesisUtterance(text);\
+      utterance.lang = 'en-GB'; // Brits Engels\
+      utterance.rate = 0.85; // Iets langzamer voor duidelijkere articulatie voor leerlingen\
+      \
+      const voices = window.speechSynthesis.getVoices();\
+      // Zoek naar hoge kwaliteit/natuurlijke Britse stemmen om de robot-stem te vermijden\
+      const preferredVoice = voices.find(v => \
+        v.lang === 'en-GB' && (v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Daniel') || v.name.includes('Oliver') || v.name.includes('Serena'))\
+      ) || voices.find(v => v.lang === 'en-GB');\
+\
+      if (preferredVoice) \{\
+        utterance.voice = preferredVoice;\
+      \}\
+      \
+      window.speechSynthesis.speak(utterance);\
+    \}\
+  \};\
+\
+  const toggleReadFullText = (e) => \{\
+    e.stopPropagation();\
+    if (!('speechSynthesis' in window)) return;\
+\
+    if (isReadingFull) \{\
+      window.speechSynthesis.cancel();\
+      setIsReadingFull(false);\
+      return;\
+    \}\
+\
+    // Stop eventueel vorig geluid\
+    window.speechSynthesis.cancel();\
+\
+    // Haal de schone, zichtbare tekst op uit de specifieke content-container\
+    const textToRead = textContentRef.current?.innerText || "";\
+    \
+    const utterance = new SpeechSynthesisUtterance(textToRead);\
+    utterance.lang = 'en-GB';\
+    utterance.rate = 0.85;\
+\
+    const voices = window.speechSynthesis.getVoices();\
+    const preferredVoice = voices.find(v => \
+      v.lang === 'en-GB' && (v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Daniel') || v.name.includes('Oliver') || v.name.includes('Serena'))\
+    ) || voices.find(v => v.lang === 'en-GB');\
+\
+    if (preferredVoice) \{\
+      utterance.voice = preferredVoice;\
+    \}\
+\
+    utterance.onend = () => setIsReadingFull(false);\
+    utterance.onerror = () => setIsReadingFull(false);\
+\
+    setIsReadingFull(true);\
+    window.speechSynthesis.speak(utterance);\
+  \};\
+\
+  const Word = (\{ text, id \}) => \{\
+    const wordKey = id || text.toLowerCase();\
+    const entry = dictionary[wordKey];\
+\
+    if (!entry) return <span className="mr-1">\{text\}</span>;\
+\
+    const handleClick = (e) => \{\
+      e.stopPropagation();\
+      const rect = e.currentTarget.getBoundingClientRect();\
+      const containerRect = containerRef.current.getBoundingClientRect();\
+      const wordCenterX = rect.left - containerRect.left + (rect.width / 2);\
+      \
+      if (activeWord && activeWord.word === text) \{\
+        if (!activeWord.showTranslation) \{\
+          setActiveWord(\{ ...activeWord, showTranslation: true \});\
+        \} else \{\
+          setActiveWord(null);\
+        \}\
+      \} else \{\
+        setActiveWord(\{\
+          word: text,\
+          ...entry,\
+          showTranslation: false,\
+          top: rect.top - containerRect.top,\
+          left: wordCenterX\
+        \});\
+      \}\
+    \};\
+\
+    const isActive = activeWord && activeWord.word === text;\
+\
+    return (\
+      <span \
+        onClick=\{handleClick\}\
+        className=\{`inline-block cursor-pointer border-b-2 border-dashed px-1 rounded transition-all duration-200 mr-1 $\{\
+          isActive \
+          ? 'bg-indigo-600 text-white border-indigo-800 shadow-sm scale-105' \
+          : 'border-blue-400 bg-blue-50/50 text-blue-900 hover:bg-blue-100 hover:border-blue-600'\
+        \}`\}\
+      >\
+        \{text\}\
+      </span>\
+    );\
+  \};\
+\
+  const getTooltipStyles = () => \{\
+    if (!activeWord || !containerRef.current) return \{\};\
+    const tooltipWidth = 320; \
+    const containerWidth = containerRef.current.offsetWidth;\
+    const containerHeight = containerRef.current.offsetHeight;\
+    const padding = 20;\
+    let displayLeft = activeWord.left;\
+    const minLeft = tooltipWidth / 2 + padding;\
+    const maxLeft = containerWidth - (tooltipWidth / 2) - padding;\
+    const constrainedLeft = Math.max(minLeft, Math.min(maxLeft, displayLeft));\
+    const arrowOffset = displayLeft - constrainedLeft;\
+\
+    const bottomPos = containerHeight - activeWord.top + 15;\
+\
+    return \{\
+      containerStyle: \{\
+        bottom: `$\{bottomPos\}px`, \
+        left: `$\{constrainedLeft\}px`,\
+        transform: 'translateX(-50%)'\
+      \},\
+      arrowStyle: \{\
+        left: `calc(50% + $\{arrowOffset\}px)`\
+      \}\
+    \};\
+  \};\
+\
+  const tooltipStyles = getTooltipStyles();\
+\
+  const renderSource1 = () => \{\
+    if (level === 'A1') return (\
+      <>\
+        <p>Scientists found a very old <Word text="skull" /> in China. The skull is 300,000 years old. It is a special <Word text="discovery" />. It is perhaps a new human <Word text="species" />.</p>\
+        <div className="bg-blue-50 p-8 rounded-2xl border-l-8 border-blue-500 my-10 shadow-sm font-medium">\
+          <h3 className="font-bold text-blue-900 mb-2 font-mono uppercase text-sm tracking-widest text-center">Summary</h3>\
+          <p>The skull is from a child. The child was 12 or 13 years old. The skull is different from other <Word text="fossils" />. It looks like a <Word text="modern human" />, but there is one big difference: the skull has no <Word text="chin" />.</p>\
+        </div>\
+        <p>Because there is no chin, the skull looks like a <strong>Denisovan</strong>. Modern humans and Denisovans come from the same <Word text="ancestor" />: <em>Homo erectus</em>.</p>\
+      </>\
+    );\
+    if (level === 'A2') return (\
+      <>\
+        <p><Word text="Researchers" /> discovered a <Word text="remarkable" /> find in the Hualongdong region of China. They found a <Word text="skull" /> that is 300,000 years old. New studies suggest this could be a new human <Word text="species" /> that we did not know before.</p>\
+        <div className="bg-blue-50 p-8 rounded-2xl border-l-8 border-blue-500 my-10 shadow-sm font-medium text-center">\
+          <h3 className="font-bold text-blue-900 mb-2 font-mono uppercase text-sm tracking-widest">Key Features</h3>\
+          <p>The skull belonged to a teenager. While it has the shape of a <Word text="modern human" />, it lacks a <Word text="chin" />. This is a very important difference <Word text="compared" /> to <Word text="previous" /> finds.</p>\
+        </div>\
+        <p>This human relative looks more like a <strong>Denisovan</strong>. Scientists <Word text="compared" /> the jaw to other humans from the Pleistocene era. They found that the <Word text="jaw" /> has <Word text="characteristics" /> of both modern and ancient humans.</p>\
+      </>\
+    );\
+    return (\
+      <div className="space-y-4 text-gray-700 leading-relaxed italic border-l-4 border-indigo-200 pl-6 py-2">\
+        <p>A few years ago, scientists found a 300,000-year-old <Word text="skull" /> in the Hualongdong region of China. New research suggests it might be the remains of a previously <Word text="undiscovered" /> human <Word text="species" />.</p>\
+        <p>The skull probably belonged to a twelve- or thirteen-year-old and differs from earlier finds. It has the same shape as the <Word text="modern human" /> skull but features another <Word text="remarkable" /> <Word text="characteristic" id="characteristics" />: a <Word text="chin" /> appears to be missing. This makes this <Word text="hominin" /> look more like a <strong>Denisovan</strong>.</p>\
+        <p>Both modern humans and Denisovans are <Word text="descendants" /> of <em>Homo erectus</em>. <Word text="Researchers" /> <Word text="compared" /> the found skull with those of modern humans and <Word text="hominins" id="hominin" /> from the Pleistocene (about 2.3 million to 10,000 years ago). They discovered that the lower <Word text="jaw" /> has <Word text="characteristics" /> of both species. This could mean that a new species will soon be added to the human <Word text="family tree" />. "More <Word text="fossils" /> and research are needed to determine the exact position in the human family tree," says one of the scientists.</p>\
+      </div>\
+    );\
+  \};\
+\
+  const renderSource2 = () => \{\
+    if (level === 'A1') return (\
+      <>\
+        <p>Scientists found the oldest <Word text="skull" /> of <em>Homo erectus</em> in South Africa. <em>Homo erectus</em> is a <Word text="direct ancestor" /> of humans today.</p>\
+        <p>This <Word text="discovery" /> shows that <em>Homo erectus</em> is older than we thought. It also shows the <Word text="theory" /> that this species started in Africa is correct.</p>\
+      </>\
+    );\
+    if (level === 'A2') return (\
+      <>\
+        <p>In South Africa, researchers found the oldest <Word text="skull" /> of <em>Homo erectus</em> ever discovered. This species is a <Word text="direct ancestor" /> of modern humans.</p>\
+        <p>This find means that <em>Homo erectus</em> existed <Word text="concurrently" /> with two other human species 2 million years ago. This <Word text="discovery" /> also <Word text="confirmed" /> the <Word text="theory" /> that the <Word text="origin" /> of <em>Homo erectus</em> was in Africa.</p>\
+      </>\
+    );\
+    return (\
+      <div className="space-y-4 text-gray-700 leading-relaxed italic border-l-4 border-indigo-200 pl-6 py-2">\
+        <p>The oldest <Word text="skull" /> to date of <em>Homo erectus</em>, a <Word text="direct ancestor" /> of the <Word text="modern human" />, has been found in South Africa. It is the first time that <em>Homo erectus</em> has been found in South Africa.</p>\
+        <p>This means not only that <em>Homo erectus</em> is older than previously thought, but also that two million years ago, three <Word text="species" /> of <Word text="hominins" id="hominin" /> lived <Word text="concurrently" /> in South Africa. The find also <Word text="confirmed" /> the <Word text="theory" /> that <em>Homo erectus</em> <Word text="originated" /> in Africa.</p>\
+      </div>\
+    );\
+  \};\
+\
+  const renderSource3 = () => \{\
+    if (level === 'A1') return (\
+      <>\
+        <p>Scientists studied an <Word text="ancient relative" /> called <em>Australopithecus sediba</em>. This species lived 2 million years ago.</p>\
+        <p>It was very special. It <Word text="climbed" /> trees like an <Word text="ape" />, but it <Word text="walked" id="walked" /> on its legs like a human.</p>\
+      </>\
+    );\
+    if (level === 'A2') return (\
+      <>\
+        <p>An <Word text="international team" /> of scientists studied <em>Australopithecus sediba</em>, an <Word text="ancient relative" /> of humans from 2 million years ago.</p>\
+        <p>Based on newly discovered fossil <Word text="vertebrae" />, they found that this species used its arms to <Word text="climb" id="climbed" /> like an <Word text="ape" />, but used its legs to walk like a human.</p>\
+      </>\
+    );\
+    return (\
+      <div className="space-y-4 text-gray-700 leading-relaxed italic border-l-4 border-indigo-200 pl-6 py-2">\
+        <p>The <Word text="ancient" /> human relative <em>Australopithecus sediba</em> "walked like a human, but <Word text="climbed" /> like an <Word text="ape" />."</p>\
+        <p><em>Australopithecus sediba</em>, a 2-million-year-old human relative, used its arms to climb like an <Word text="ape" /> and its legs to walk like a human. An <Word text="international team" /> of scientists stated this based on newly discovered <Word text="fossil" /> <Word text="vertebrae" /> of the species.</p>\
+      </div>\
+    );\
+  \};\
+\
+  const renderSource4 = () => \{\
+    if (level === 'A1') return (\
+      <>\
+        <p>The European Commission wants a <Word text="reduction" /> in <Word text="food waste" />. Their goal is 30% less waste by the year 2030.</p>\
+        <p>Most waste (53%) happens in our <strong>homes</strong>. This waste costs 132 billion euros. We must stop this <Word text="economic loss" /> to help the <Word text="environment" />.</p>\
+      </>\
+    );\
+    if (level === 'A2') return (\
+      <>\
+        <p>The European Commission has a new <Word text="proposal" />. They want member states to cut <Word text="food waste" /> by 30% per person by 2030. Every year, we waste 89 million tons of food <Word text="annually" />.</p>\
+        <p>Research shows that 53% of waste occurs in <Word text="households" />. This waste results in a huge <Word text="economic loss" /> of 132 billion euros.</p>\
+      </>\
+    );\
+    return (\
+      <div className="space-y-4 text-gray-700 leading-relaxed italic border-l-4 border-indigo-200 pl-6 py-2">\
+        <p>Europe wants to reduce <Word text="food waste" /> by 30%.</p>\
+        <p>The European Commission wants the member states to reduce the waste of food by 30% per person by 2030.</p>\
+        <p>The European Commission estimates that the majority of our <Word text="food waste" />, 53%, occurs in <Word text="households" />. The other 47% happens at supermarkets, restaurants and hotels, <Word text="agriculture" />, and food processing and production.</p>\
+        <p>This means that we waste approximately 89 million tons of food per year (= 131 kilos per inhabitant). This in turn leads to an <Word text="economic loss" /> of 132 billion euros... and that is without counting the impact on our <Word text="environment" />.</p>\
+        <p>Therefore, the European Commission proposes reducing the <Word text="food waste" /> per <Word text="household" id="households" /> by 30% between now and 2030. Other sectors will also have to contribute. This <Word text="proposal" /> contributes to reaching the <Word text="Sustainable" /> Development Goals of the United Nations.</p>\
+      </div>\
+    );\
+  \};\
+\
+  const renderSource5 = () => \{\
+    if (level === 'A1') return (\
+      <>\
+        <p>Scientists found 40,000 year old art in a cave in Indonesia. It is on an <Word text="island" /> called Sulawesi. It is the oldest <Word text="cave paintings" id="cave paintings" /> in the world.</p>\
+        <p>Before this, people thought art started in Europe. But now we know it started in Asia too.</p>\
+      </>\
+    );\
+    if (level === 'A2') return (\
+      <>\
+        <p><Word text="Researchers" /> discovered <Word text="cave paintings" /> in Sulawesi that are at least 40,000 years old. This makes them the oldest known cave art in the world.</p>\
+        <p><Word text="Uranium dating" /> has now proven that some were created much earlier than we thought. Painting now appears not to be an exclusively European phenomenon.</p>\
+      </>\
+    );\
+    return (\
+      <div className="space-y-4 text-gray-700 leading-relaxed italic border-l-4 border-indigo-200 pl-6 py-2">\
+        <p>40,000-year-old art found on Sulawesi. In a cave on the Indonesian <Word text="island" /> of Sulawesi, <Word text="researchers" /> have found rock paintings that are said to be at least 40,000 years old. According to the researchers, this makes it the oldest known <Word text="cave art" id="cave paintings" /> in the world.</p>\
+        <p>The existence of the paintings has been known for some time, but it was always assumed they were approximately 10,000 years old. <Word text="Uranium dating" /> has now shown, however, that some of the drawings were already made 40,000 years ago.</p>\
+        <p>This is <Word text="remarkable" />, because until now it was assumed that rock art <Word text="originated" /> in Europe. Painting now appears not to be an exclusively European phenomenon. The researchers, who published their findings in the magazine <em>Nature</em>, even suggest that art possibly <Word text="originated" /> before humans <Word text="spread" /> from Africa. On Sulawesi, images of various hands have been found. The oldest appears to have been made 40,000 years ago and the youngest about 17,500 years ago. Images of animals have also been found.</p>\
+      </div>\
+    );\
+  \};\
+\
+  const renderContent = () => \{\
+    const contentMap = \{\
+      1: \{ render: renderSource1, sourceInfo: "nu.nl (Aug 10, 2023)" \},\
+      2: \{ render: renderSource2, sourceInfo: "Luc De Roy (vrtnws.be, Apr 5, 2020)" \},\
+      3: \{ render: renderSource3, sourceInfo: "Luc De Roy (vrtnws.be, Nov 26, 2021)" \},\
+      4: \{ render: renderSource4, sourceInfo: "fepex.es / biojournaal.nl (Sep 20, 2023)" \},\
+      5: \{ render: renderSource5, sourceInfo: "historiek.net (Oct 9, 2014)" \},\
+    \};\
+    \
+    const current = contentMap[source];\
+    return (\
+      <div className="space-y-6">\
+        <div className="flex justify-between items-center mb-2 pb-4 border-b border-slate-200">\
+          <span className="text-xs font-black text-slate-400 uppercase tracking-widest">Article Content</span>\
+          <button \
+            onClick=\{toggleReadFullText\}\
+            className=\{`flex items-center gap-2 px-5 py-2.5 rounded-full font-black text-[10px] uppercase tracking-widest transition-all $\{\
+              isReadingFull \
+              ? 'bg-red-100 text-red-600 shadow-inner border border-red-200' \
+              : 'bg-indigo-50 text-indigo-600 hover:bg-indigo-100 hover:shadow-md border border-indigo-100 hover:scale-105'\
+            \}`\}\
+          >\
+            \{isReadingFull ? <VolumeX size=\{16\} className="animate-pulse" /> : <Volume2 size=\{16\} />\}\
+            \{isReadingFull ? "Stop reading" : "Read text"\}\
+          </button>\
+        </div>\
+        \{/* De referentie (textContentRef) pakt enkel de les-tekst, zonder de originele bronvermelding */\}\
+        <div ref=\{textContentRef\} className="space-y-6">\
+          \{current.render()\}\
+        </div>\
+        <p className="text-xs text-gray-400 mt-8 italic border-t pt-4 font-mono">Original Source: \{current.sourceInfo\}</p>\
+      </div>\
+    );\
+  \};\
+\
+  return (\
+    <div className="min-h-screen bg-slate-100 p-4 md:p-8 font-sans">\
+      <div className="max-w-5xl mx-auto bg-white rounded-[2.5rem] shadow-2xl relative" ref=\{containerRef\}>\
+        \
+        \{/* Chapter Header */\}\
+        <div className="bg-indigo-950 px-10 py-5 flex items-center justify-between border-b border-indigo-900/50 rounded-t-[2.5rem]">\
+           <div className="flex items-center gap-3">\
+             <div className="w-2 h-8 bg-indigo-500 rounded-full"></div>\
+             <h2 className="text-indigo-100 text-base font-black uppercase tracking-[0.2em]">\
+               2 The evolution of the human species\
+             </h2>\
+           </div>\
+           <div className="text-indigo-400 text-[10px] font-bold tracking-widest uppercase hidden md:block text-right">\
+             Interactive CLIL Learning Environment\
+           </div>\
+        </div>\
+\
+        \{/* Source Navigation Tabs */\}\
+        <div className="bg-indigo-900/90 p-4 flex gap-3 overflow-x-auto border-b border-indigo-800">\
+          \{[1, 2, 3, 4, 5].map((s) => (\
+            <button\
+              key=\{s\}\
+              onClick=\{() => \{ setSource(s); setActiveWord(null); \}\}\
+              className=\{`flex items-center gap-2 px-6 py-2.5 rounded-2xl text-xs font-black transition-all whitespace-nowrap tracking-wider uppercase $\{source === s ? 'bg-indigo-600 text-white shadow-[0_5px_15px_rgba(0,0,0,0.3)] scale-105' : 'text-indigo-300 hover:bg-indigo-800/50 hover:text-white'\}`\}\
+            >\
+              <FileText size=\{14\} /> Source \{s\}\
+            </button>\
+          ))\}\
+        </div>\
+\
+        \{/* Dynamic Source Header */\}\
+        <div className="bg-indigo-700 p-10 text-white relative">\
+          <div className="absolute top-0 right-0 p-8 opacity-10">\
+            <History size=\{140\} />\
+          </div>\
+          <div className="flex items-center gap-4 mb-4 relative z-10">\
+            <div className="bg-white/20 p-3 rounded-2xl backdrop-blur-md">\
+              \{source === 1 && <Info size=\{32\} />\}\
+              \{source === 2 && <Map size=\{32\} />\}\
+              \{source === 3 && <History size=\{32\} />\}\
+              \{source === 4 && <Leaf size=\{32\} />\}\
+              \{source === 5 && <Palette size=\{32\} />\}\
+            </div>\
+            <span className="text-indigo-100 uppercase tracking-[0.3em] text-xs font-black font-mono">Source \{source\}</span>\
+          </div>\
+          <h1 className="text-3xl md:text-5xl font-black leading-tight relative z-10 tracking-tight">\
+            \{source === 1 && "New Human Species Found?"\}\
+            \{source === 2 && "Homo erectus in South Africa"\}\
+            \{source === 3 && "Australopithecus: Ape or Human?"\}\
+            \{source === 4 && "Fighting Food Waste in Europe"\}\
+            \{source === 5 && "Ancient Cave Art in Sulawesi"\}\
+          </h1>\
+        </div>\
+\
+        \{/* Complexity/Level Selector */\}\
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between p-8 bg-slate-50 border-b border-slate-200 gap-6 shadow-inner">\
+          <div className="flex items-center gap-4">\
+            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">Difficulty:</span>\
+            <div className="flex bg-slate-200 rounded-2xl p-1.5 shadow-inner gap-1 overflow-x-auto">\
+              \{[\
+                \{ id: 'A1', label: 'A1 Beginner', icon: <GraduationCap size=\{14\} /> \},\
+                \{ id: 'A2', label: 'A2 Elementary', icon: <Info size=\{14\} /> \},\
+                \{ id: 'Original', label: 'Original Text (English)', icon: <AlignLeft size=\{14\} /> \}\
+              ].map((lvl) => (\
+                <button \
+                  key=\{lvl.id\}\
+                  onClick=\{() => \{ setLevel(lvl.id); setActiveWord(null); \}\}\
+                  className=\{`px-5 py-2.5 rounded-xl text-xs font-black transition-all duration-300 flex items-center gap-2 whitespace-nowrap $\{level === lvl.id ? 'bg-white shadow-xl text-indigo-700' : 'text-slate-500 hover:text-indigo-600'\}`\}\
+                >\
+                  \{lvl.icon\}\
+                  \{lvl.label\}\
+                </button>\
+              ))\}\
+            </div>\
+          </div>\
+          <div className="flex items-center text-[10px] font-black text-indigo-700 bg-indigo-50 px-5 py-2.5 rounded-2xl gap-3 border border-indigo-100 shadow-sm uppercase tracking-widest">\
+            <MousePointerClick size=\{18\} className="animate-bounce" />\
+            <span>Click 1x: English | Click 2x: Dutch & French</span>\
+          </div>\
+        </div>\
+\
+        \{/* Interactive Text Display */\}\
+        <div className="p-10 md:p-24 relative min-h-[500px] transition-all duration-500" onClick=\{() => setActiveWord(null)\}>\
+          \{renderContent()\}\
+\
+          \{/* Contextual Floating Tooltip */\}\
+          \{activeWord && (\
+            <div \
+              className="absolute z-50 transition-opacity duration-300 ease-out"\
+              style=\{tooltipStyles.containerStyle\}\
+              onClick=\{(e) => e.stopPropagation()\}\
+            >\
+              <div className="bg-indigo-950 text-white rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-7 w-80 border-2 border-indigo-400 relative">\
+                <button onClick=\{() => setActiveWord(null)\} className="absolute -top-3 -right-3 bg-red-500 text-white rounded-full p-2 hover:bg-red-600 transition-transform hover:scale-110 shadow-xl border-2 border-white"><X size=\{18\} strokeWidth=\{3\} /></button>\
+\
+                \{/* Header met het Engelse woord en de uitspreek-knop */\}\
+                <div className="flex items-center justify-between mb-4 pb-4 border-b border-indigo-800/50">\
+                  <h3 className="text-2xl font-black text-white capitalize tracking-tight">\{activeWord.word\}</h3>\
+                  <button \
+                    onClick=\{(e) => speakWord(activeWord.word, e)\} \
+                    className="bg-indigo-600 hover:bg-indigo-400 text-white p-2.5 rounded-full shadow-[0_0_15px_rgba(79,70,229,0.5)] transition-all hover:scale-110 active:scale-95 flex items-center justify-center border border-indigo-400 group"\
+                    title="Beluister de Britse uitspraak"\
+                  >\
+                    <Volume2 size=\{20\} className="group-hover:animate-pulse" />\
+                  </button>\
+                </div>\
+\
+                <div className="mb-4">\
+                  <div className="flex items-center gap-2 mb-2 opacity-70">\
+                    <BookOpen size=\{16\} className="text-indigo-300" />\
+                    <span className="text-indigo-300 font-black text-[9px] uppercase tracking-[0.2em]">English Definition</span>\
+                  </div>\
+                  <p className="text-xl text-white font-semibold leading-snug">"\{activeWord.info\}"</p>\
+                </div>\
+\
+                <div className=\{`mt-5 pt-5 border-t border-indigo-800 transition-all duration-500 $\{activeWord.showTranslation ? 'opacity-100' : 'opacity-0'\}`\}>\
+                  \{activeWord.showTranslation ? (\
+                    <div className="flex flex-col gap-4">\
+                      <div>\
+                        <div className="flex items-center gap-2 mb-1 opacity-70">\
+                          <Languages size=\{18\} className="text-yellow-400" />\
+                          <span className="text-yellow-400 font-black text-[9px] uppercase tracking-[0.2em] italic">Dutch Translation</span>\
+                        </div>\
+                        <p className="text-2xl font-black text-yellow-400 tracking-tight leading-none uppercase">\{activeWord.nl\}</p>\
+                      </div>\
+                      <div>\
+                        <div className="flex items-center gap-2 mb-1 opacity-70">\
+                          <Languages size=\{18\} className="text-emerald-400" />\
+                          <span className="text-emerald-400 font-black text-[9px] uppercase tracking-[0.2em] italic">French Translation</span>\
+                        </div>\
+                        <p className="text-2xl font-black text-emerald-400 tracking-tight leading-none uppercase">\{activeWord.fr\}</p>\
+                      </div>\
+                    </div>\
+                  ) : (\
+                    <div className="text-[10px] font-black text-indigo-400 uppercase tracking-[0.2em] text-center italic cursor-pointer animate-pulse bg-indigo-900/40 py-3 rounded-xl border border-indigo-800 border-dashed" onClick=\{() => setActiveWord(\{ ...activeWord, showTranslation: true \})\}>Click again for Dutch & French</div>\
+                  )\}\
+                </div>\
+                \
+                \{/* Visual Arrow for Tooltip */\}\
+                <div className="absolute -bottom-2 w-5 h-5 bg-indigo-950 rotate-45 border-r-2 border-b-2 border-indigo-400 shadow-xl" style=\{tooltipStyles.arrowStyle\}></div>\
+              </div>\
+            </div>\
+          )\}\
+        </div>\
+\
+        \{/* Global Footer */\}\
+        <div className="bg-slate-50 p-10 text-center text-[10px] text-slate-400 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4 px-16 uppercase tracking-[0.1em] font-black rounded-b-[2.5rem]">\
+          <div className="flex items-center gap-6">\
+            <span className="bg-slate-200 px-4 py-2 rounded-xl text-slate-500">Multilingual CLIL Engine v5.2</span>\
+            <span className="text-indigo-300 font-black tracking-widest">History Education Focus</span>\
+          </div>\
+          <p className="opacity-50 tracking-tighter italic">Source navigation enabled with difficulty scaling</p>\
+        </div>\
+      </div>\
+    </div>\
+  );\
+\};\
+\
+export default App;}
