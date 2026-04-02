@@ -1,0 +1,663 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.4">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;History CLIL Interactive Reader&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Tailwind CSS via CDN om het ontwerp te behouden zonder build tools --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Custom animaties die Tailwind niet standaard via CDN heeft zonder config */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>@keyframes slideUp { from { transform: translate(-50%, 10px); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } }</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.tooltip-anim {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>animation: fadeIn 0.2s ease-out, slideUp 0.3s ease-out forwards;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.word-interactive {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: all 0.2s ease;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.word-active {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #4f46e5 !important; /* indigo-600 */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: white !important;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-color: #3730a3 !important; /* indigo-800 */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transform: scale(1.05);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body class="min-h-screen bg-slate-100 p-4 md:p-8 font-sans"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Hoofdcontainer --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="app-container" class="max-w-5xl mx-auto bg-white rounded-[2.5rem] shadow-2xl relative overflow-visible"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Header --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="bg-indigo-950 px-10 py-5 flex items-center justify-between border-b border-indigo-900/50 rounded-t-[2.5rem]"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">           </span>&lt;div class="flex items-center gap-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;div class="w-2 h-8 bg-indigo-500 rounded-full"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;h2 class="text-indigo-100 text-base font-black uppercase tracking-[0.2em]"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">               </span>2 The evolution of the human species</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">           </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">           </span>&lt;div class="text-indigo-400 text-[10px] font-bold tracking-widest uppercase hidden md:block text-right"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>Interactive CLIL Learning Environment</p>
+<p class="p1"><span class="Apple-converted-space">           </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Tabbladen (Sources) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="tabs-container" class="bg-indigo-900/90 p-4 flex gap-3 overflow-x-auto border-b border-indigo-800"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Dynamisch ingeladen via JS --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Dynamische Source Header --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="bg-indigo-700 p-10 text-white relative"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="absolute top-0 right-0 p-8 opacity-10" id="header-bg-icon"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Icon --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="flex items-center gap-4 mb-4 relative z-10"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="bg-white/20 p-3 rounded-2xl backdrop-blur-md" id="header-icon"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;!-- Icon --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span class="text-indigo-100 uppercase tracking-[0.3em] text-xs font-black font-mono" id="source-subtitle"&gt;Source 1&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;h1 class="text-3xl md:text-5xl font-black leading-tight relative z-10 tracking-tight" id="source-title"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Title --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Niveau Selector --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="flex flex-col lg:flex-row lg:items-center justify-between p-8 bg-slate-50 border-b border-slate-200 gap-6 shadow-inner"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="flex items-center gap-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span class="text-[10px] font-black text-slate-400 uppercase tracking-widest italic"&gt;Difficulty:&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="flex bg-slate-200 rounded-2xl p-1.5 shadow-inner gap-1 overflow-x-auto" id="levels-container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;!-- Dynamisch ingeladen via JS --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="flex items-center text-[10px] font-black text-indigo-700 bg-indigo-50 px-5 py-2.5 rounded-2xl gap-3 border border-indigo-100 shadow-sm uppercase tracking-widest"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span id="icon-mouse" class="animate-bounce"&gt;&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span&gt;Click 1x: English | Click 2x: Dutch &amp; French&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Interactieve Tekst Container --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="p-10 md:p-24 relative min-h-[500px] transition-all duration-500" id="main-content-area"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="space-y-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="flex justify-between items-center mb-2 pb-4 border-b border-slate-200"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;span class="text-xs font-black text-slate-400 uppercase tracking-widest"&gt;Article Content&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;button id="read-full-btn" class="flex items-center gap-2 px-5 py-2.5 rounded-full font-black text-[10px] uppercase tracking-widest transition-all bg-indigo-50 text-indigo-600 hover:bg-indigo-100 hover:shadow-md border border-indigo-100 hover:scale-105"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;span id="read-full-icon"&gt;&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;span id="read-full-text"&gt;Read text&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="text-content" class="space-y-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;!-- Dynamische tekst komt hier --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p id="source-info" class="text-xs text-gray-400 mt-8 italic border-t pt-4 font-mono"&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;!-- Tooltip (Verborgen bij de start) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div id="tooltip" class="absolute z-50 hidden tooltip-anim" style="transform: translateX(-50%);"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="bg-indigo-950 text-white rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-7 w-80 border-2 border-indigo-400 relative"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;button id="close-tooltip" class="absolute -top-3 -right-3 bg-red-500 text-white rounded-full p-2 hover:bg-red-600 transition-transform hover:scale-110 shadow-xl border-2 border-white"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;line x1="18" y1="6" x2="6" y2="18"&gt;&lt;/line&gt;&lt;line x1="6" y1="6" x2="18" y2="18"&gt;&lt;/line&gt;&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/button&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div class="flex items-center justify-between mb-4 pb-4 border-b border-indigo-800/50"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3 id="tt-word" class="text-2xl font-black text-white capitalize tracking-tight"&gt;&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button id="tt-speak" class="bg-indigo-600 hover:bg-indigo-400 text-white p-2.5 rounded-full shadow-[0_0_15px_rgba(79,70,229,0.5)] transition-all hover:scale-110 active:scale-95 flex items-center justify-center border border-indigo-400 group" title="Beluister de Britse uitspraak"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;span id="tt-speak-icon" class="group-hover:animate-pulse"&gt;&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div class="mb-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="flex items-center gap-2 mb-2 opacity-70"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;span id="tt-book-icon" class="text-indigo-300"&gt;&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;span class="text-indigo-300 font-black text-[9px] uppercase tracking-[0.2em]"&gt;English Definition&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p id="tt-info" class="text-xl text-white font-semibold leading-snug"&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div id="tt-translation-container" class="mt-5 pt-5 border-t border-indigo-800 transition-all duration-500"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Wordt ingevuld via JS --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">              </span></p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;!-- Pijltje Tooltip --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div id="tt-arrow" class="absolute -bottom-2 w-5 h-5 bg-indigo-950 rotate-45 border-r-2 border-b-2 border-indigo-400 shadow-xl"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Footer --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="bg-slate-50 p-10 text-center text-[10px] text-slate-400 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4 px-16 uppercase tracking-[0.1em] font-black rounded-b-[2.5rem]"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="flex items-center gap-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span class="bg-slate-200 px-4 py-2 rounded-xl text-slate-500"&gt;Multilingual CLIL Engine v5.2&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span class="text-indigo-300 font-black tracking-widest"&gt;History Education Focus&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;p class="opacity-50 tracking-tighter italic"&gt;Source navigation enabled with difficulty scaling&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- 1. ICONEN (SVG Strings) ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const icons = {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>FileText: `&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"&gt;&lt;/path&gt;&lt;polyline points="14 2 14 8 20 8"&gt;&lt;/polyline&gt;&lt;line x1="16" y1="13" x2="8" y2="13"&gt;&lt;/line&gt;&lt;line x1="16" y1="17" x2="8" y2="17"&gt;&lt;/line&gt;&lt;polyline points="10 9 9 9 8 9"&gt;&lt;/polyline&gt;&lt;/svg&gt;`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>Info: `&lt;svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;circle cx="12" cy="12" r="10"&gt;&lt;/circle&gt;&lt;line x1="12" y1="16" x2="12" y2="12"&gt;&lt;/line&gt;&lt;line x1="12" y1="8" x2="12.01" y2="8"&gt;&lt;/line&gt;&lt;/svg&gt;`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>InfoSmall: `&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;circle cx="12" cy="12" r="10"&gt;&lt;/circle&gt;&lt;line x1="12" y1="16" x2="12" y2="12"&gt;&lt;/line&gt;&lt;line x1="12" y1="8" x2="12.01" y2="8"&gt;&lt;/line&gt;&lt;/svg&gt;`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>Map: `&lt;svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"&gt;&lt;/polygon&gt;&lt;line x1="8" y1="2" x2="8" y2="18"&gt;&lt;/line&gt;&lt;line x1="16" y1="6" x2="16" y2="22"&gt;&lt;/line&gt;&lt;/svg&gt;`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>History: `&lt;svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"&gt;&lt;/path&gt;&lt;path d="M3 3v5h5"&gt;&lt;/path&gt;&lt;path d="M12 7v5l4 2"&gt;&lt;/path&gt;&lt;/svg&gt;`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>HistoryLarge: `&lt;svg width="140" height="140" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"&gt;&lt;/path&gt;&lt;path d="M3 3v5h5"&gt;&lt;/path&gt;&lt;path d="M12 7v5l4 2"&gt;&lt;/path&gt;&lt;/svg&gt;`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>Leaf: `&lt;svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"&gt;&lt;/path&gt;&lt;path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"&gt;&lt;/path&gt;&lt;/svg&gt;`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>Palette: `&lt;svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;circle cx="13.5" cy="6.5" r=".5" fill="currentColor"&gt;&lt;/circle&gt;&lt;circle cx="17.5" cy="10.5" r=".5" fill="currentColor"&gt;&lt;/circle&gt;&lt;circle cx="8.5" cy="7.5" r=".5" fill="currentColor"&gt;&lt;/circle&gt;&lt;circle cx="6.5" cy="12.5" r=".5" fill="currentColor"&gt;&lt;/circle&gt;&lt;path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"&gt;&lt;/path&gt;&lt;/svg&gt;`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>GraduationCap: `&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M21.42 10.922a2 2 0 0 1-.01 2.83l-7.1 7.1a2 2 0 0 1-2.83 0l-7.1-7.1a2 2 0 0 1-.01-2.83L11.233 4a2 2 0 0 1 2.828 0l6.89 6.89Z"&gt;&lt;/path&gt;&lt;path d="M22 10v6"&gt;&lt;/path&gt;&lt;path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"&gt;&lt;/path&gt;&lt;/svg&gt;`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>AlignLeft: `&lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;line x1="21" y1="6" x2="3" y2="6"&gt;&lt;/line&gt;&lt;line x1="15" y1="12" x2="3" y2="12"&gt;&lt;/line&gt;&lt;line x1="17" y1="18" x2="3" y2="18"&gt;&lt;/line&gt;&lt;/svg&gt;`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>MousePointerClick: `&lt;svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M14 4.1 12 6"&gt;&lt;/path&gt;&lt;path d="m5.1 8-2.9-.8"&gt;&lt;/path&gt;&lt;path d="m6 12-1.9 2"&gt;&lt;/path&gt;&lt;path d="M7.2 2.2 8 5.1"&gt;&lt;/path&gt;&lt;path d="M9.037 9.69a.498.498 0 0 1 .653-.653l11 4.5a.5.5 0 0 1-.074.949l-4.349 1.041a1 1 0 0 0-.74.739l-1.04 4.35a.5.5 0 0 1-.95.074z"&gt;&lt;/path&gt;&lt;/svg&gt;`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>Volume2: `&lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"&gt;&lt;/polygon&gt;&lt;path d="M15.54 8.46a5 5 0 0 1 0 7.07"&gt;&lt;/path&gt;&lt;path d="M19.07 4.93a10 10 0 0 1 0 14.14"&gt;&lt;/path&gt;&lt;/svg&gt;`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>Volume2Small: `&lt;svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"&gt;&lt;/polygon&gt;&lt;path d="M15.54 8.46a5 5 0 0 1 0 7.07"&gt;&lt;/path&gt;&lt;path d="M19.07 4.93a10 10 0 0 1 0 14.14"&gt;&lt;/path&gt;&lt;/svg&gt;`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>VolumeX: `&lt;svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"&gt;&lt;/polygon&gt;&lt;line x1="23" y1="9" x2="17" y2="15"&gt;&lt;/line&gt;&lt;line x1="17" y1="9" x2="23" y2="15"&gt;&lt;/line&gt;&lt;/svg&gt;`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>BookOpen: `&lt;svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"&gt;&lt;/path&gt;&lt;path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"&gt;&lt;/path&gt;&lt;/svg&gt;`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>LanguagesYellow: `&lt;svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-yellow-400"&gt;&lt;path d="m5 8 6 6"&gt;&lt;/path&gt;&lt;path d="m4 14 6-6 2-3"&gt;&lt;/path&gt;&lt;path d="M2 5h12"&gt;&lt;/path&gt;&lt;path d="M7 2h1"&gt;&lt;/path&gt;&lt;path d="m22 22-5-10-5 10"&gt;&lt;/path&gt;&lt;path d="M14 18h6"&gt;&lt;/path&gt;&lt;/svg&gt;`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>LanguagesEmerald: `&lt;svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-400"&gt;&lt;path d="m5 8 6 6"&gt;&lt;/path&gt;&lt;path d="m4 14 6-6 2-3"&gt;&lt;/path&gt;&lt;path d="M2 5h12"&gt;&lt;/path&gt;&lt;path d="M7 2h1"&gt;&lt;/path&gt;&lt;path d="m22 22-5-10-5 10"&gt;&lt;/path&gt;&lt;path d="M14 18h6"&gt;&lt;/path&gt;&lt;/svg&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Static Icons injecten</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('icon-mouse').innerHTML = icons.MousePointerClick;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('tt-speak-icon').innerHTML = icons.Volume2;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('tt-book-icon').innerHTML = icons.BookOpen;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- 2. DATA (Woordenboek &amp; Content) ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const dictionary = {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"skull": { nl: "schedel", fr: "crâne", info: "The bones of the head." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"species": { nl: "soort", fr: "espèce", info: "A group of living things (like humans or animals)." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"discovery": { nl: "ontdekking", fr: "découverte", info: "Finding something new." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"fossils": { nl: "fossielen", fr: "fossiles", info: "Old remains of plants or animals in rock." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"modern human": { nl: "de moderne mens", fr: "humain moderne", info: "People like us (Homo sapiens)." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"chin": { nl: "kin", fr: "menton", info: "The part of your face below your mouth." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"ancestor": { nl: "voorouder", fr: "ancêtre", info: "A family member from a long time ago." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"family tree": { nl: "stamboom", fr: "arbre généalogique", info: "A diagram showing family history." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"jaw": { nl: "kaak", fr: "mâchoire", info: "The bone used for eating and speaking." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"researchers": { nl: "onderzoekers", fr: "chercheurs", info: "People who study things to find facts." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"remarkable": { nl: "opmerkelijk", fr: "remarquable", info: "Something very special or unusual." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"characteristics": { nl: "kenmerken", fr: "caractéristiques", info: "Typical qualities of something." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"determined": { nl: "vastgesteld / bepaald", fr: "déterminé", info: "Decided or discovered for sure." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"previous": { nl: "vorige", fr: "précédent", info: "The one before this one." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"compared": { nl: "vergeleken", fr: "comparé", info: "Looking at two things to see differences." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"direct ancestor": { nl: "directe voorouder", fr: "ancêtre direct", info: "A family member you come from directly." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"origin": { nl: "oorsprong", fr: "origine", info: "Where something starts or comes from." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"confirmed": { nl: "bevestigd", fr: "confirmé", info: "Shown to be true." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"theory": { nl: "theorie", fr: "théorie", info: "An idea that explains how something works." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"concurrently": { nl: "tegelijkertijd", fr: "simultanément", info: "At the same time." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"ancient relative": { nl: "oude verwant", fr: "ancien parent", info: "A family member from a very long time ago." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"vertebrae": { nl: "wervels", fr: "vertèbres", info: "The bones in the back (spine)." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"international team": { nl: "internationaal team", fr: "équipe internationale", info: "Scientists from many different countries." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"climbed": { nl: "klom", fr: "grimpé", info: "Moved up using hands and feet." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"ape": { nl: "aap", fr: "singe", info: "An animal like a chimpanzee or gorilla." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"food waste": { nl: "voedselverspilling", fr: "gaspillage alimentaire", info: "Food that is thrown away instead of eaten." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"households": { nl: "huishoudens", fr: "ménages", info: "People living together in a house." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"reduction": { nl: "vermindering", fr: "réduction", info: "Making something smaller or less." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"economic loss": { nl: "economisch verlies", fr: "perte économique", info: "Losing money in a business or country." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"environment": { nl: "milieu", fr: "environnement", info: "The natural world around us (air, water, land)." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"proposal": { nl: "voorstel", fr: "proposition", info: "A plan or suggestion for people to consider." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"sustainable": { nl: "duurzaam", fr: "durable", info: "Good for the planet so it can last a long time." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"agriculture": { nl: "landbouw", fr: "agriculture", info: "Farming and growing food." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"annually": { nl: "jaarlijks", fr: "annuellement", info: "Happening every year." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"cave paintings": { nl: "rotstekeningen / grottekeningen", fr: "peintures rupestres", info: "Ancient art painted on the walls of a cave." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"island": { nl: "eiland", fr: "île", info: "A piece of land surrounded by water." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"uranium dating": { nl: "uraniumdatering", fr: "datation à l'uranium", info: "A scientific method to find out how old something is." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"originated": { nl: "ontstond", fr: "originaire", info: "Where or how something began." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"spread": { nl: "verspreidde", fr: "répandu", info: "Moved to many different places." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"ancient": { nl: "eeuwenoud", fr: "ancien", info: "From a very long time ago in history." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"descendants": { nl: "nakomelingen", fr: "descendants", info: "People who come from a specific ancestor." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"undiscovered": { nl: "onontdekt", fr: "non découvert", info: "Something that has not been found yet." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"hominin": { nl: "mensachtige", fr: "hominine", info: "A human-like species from history." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"descends": { nl: "stamt af", fr: "descend", info: "Comes from a previous generation or species." }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Helper om interactieve woorden te genereren in HTML strings</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function w(text, id = "") {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const wordKey = id || text.toLowerCase();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return `&lt;span class="word-interactive inline-block cursor-pointer border-b-2 border-dashed px-1 rounded mr-1 border-blue-400 bg-blue-50/50 text-blue-900 hover:bg-blue-100 hover:border-blue-600" data-word="${text}" data-id="${wordKey}"&gt;${text}&lt;/span&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const sourceContent = {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>1: {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>title: "New Human Species Found?",</p>
+<p class="p1"><span class="Apple-converted-space">                </span>iconStr: 'Info',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>sourceInfo: "nu.nl (Aug 10, 2023)",</p>
+<p class="p1"><span class="Apple-converted-space">                </span>levels: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'A1': `&lt;p&gt;Scientists found a very old ${w('skull')} in China. The skull is 300,000 years old. It is a special ${w('discovery')}. It is perhaps a new human ${w('species')}.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;div class="bg-blue-50 p-8 rounded-2xl border-l-8 border-blue-500 my-10 shadow-sm font-medium"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;h3 class="font-bold text-blue-900 mb-2 font-mono uppercase text-sm tracking-widest text-center"&gt;Summary&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;p&gt;The skull is from a child. The child was 12 or 13 years old. The skull is different from other ${w('fossils')}. It looks like a ${w('modern human')}, but there is one big difference: the skull has no ${w('chin')}.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;p&gt;Because there is no chin, the skull looks like a &lt;strong&gt;Denisovan&lt;/strong&gt;. Modern humans and Denisovans come from the same ${w('ancestor')}: &lt;em&gt;Homo erectus&lt;/em&gt;.&lt;/p&gt;`,</p>
+<p class="p2"><span class="Apple-converted-space">                    </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'A2': `&lt;p&gt;${w('Researchers')} discovered a ${w('remarkable')} find in the Hualongdong region of China. They found a ${w('skull')} that is 300,000 years old. New studies suggest this could be a new human ${w('species')} that we did not know before.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;div class="bg-blue-50 p-8 rounded-2xl border-l-8 border-blue-500 my-10 shadow-sm font-medium text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;h3 class="font-bold text-blue-900 mb-2 font-mono uppercase text-sm tracking-widest"&gt;Key Features&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;p&gt;The skull belonged to a teenager. While it has the shape of a ${w('modern human')}, it lacks a ${w('chin')}. This is a very important difference ${w('compared')} to ${w('previous')} finds.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;p&gt;This human relative looks more like a &lt;strong&gt;Denisovan&lt;/strong&gt;. Scientists ${w('compared')} the jaw to other humans from the Pleistocene era. They found that the ${w('jaw')} has ${w('characteristics')} of both modern and ancient humans.&lt;/p&gt;`,</p>
+<p class="p2"><span class="Apple-converted-space">                    </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Original': `&lt;div class="space-y-4 text-gray-700 leading-relaxed italic border-l-4 border-indigo-200 pl-6 py-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                   </span>&lt;p&gt;A few years ago, scientists found a 300,000-year-old ${w('skull')} in the Hualongdong region of China. New research suggests it might be the remains of a previously ${w('undiscovered')} human ${w('species')}.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                   </span>&lt;p&gt;The skull probably belonged to a twelve- or thirteen-year-old and differs from earlier finds. It has the same shape as the ${w('modern human')} skull but features another ${w('remarkable')} ${w('characteristic', 'characteristics')}: a ${w('chin')} appears to be missing. This makes this ${w('hominin')} look more like a &lt;strong&gt;Denisovan&lt;/strong&gt;.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                   </span>&lt;p&gt;Both modern humans and Denisovans are ${w('descendants')} of &lt;em&gt;Homo erectus&lt;/em&gt;. ${w('Researchers')} ${w('compared')} the found skull with those of modern humans and ${w('hominins', 'hominin')} from the Pleistocene (about 2.3 million to 10,000 years ago). They discovered that the lower ${w('jaw')} has ${w('characteristics')} of both species. This could mean that a new species will soon be added to the human ${w('family tree')}. "More ${w('fossils')} and research are needed to determine the exact position in the human family tree," says one of the scientists.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                 </span>&lt;/div&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>2: {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>title: "Homo erectus in South Africa",</p>
+<p class="p1"><span class="Apple-converted-space">                </span>iconStr: 'Map',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>sourceInfo: "Luc De Roy (vrtnws.be, Apr 5, 2020)",</p>
+<p class="p1"><span class="Apple-converted-space">                </span>levels: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'A1': `&lt;p&gt;Scientists found the oldest ${w('skull')} of &lt;em&gt;Homo erectus&lt;/em&gt; in South Africa. &lt;em&gt;Homo erectus&lt;/em&gt; is a ${w('direct ancestor')} of humans today.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;p&gt;This ${w('discovery')} shows that &lt;em&gt;Homo erectus&lt;/em&gt; is older than we thought. It also shows the ${w('theory')} that this species started in Africa is correct.&lt;/p&gt;`,</p>
+<p class="p2"><span class="Apple-converted-space">                    </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'A2': `&lt;p&gt;In South Africa, researchers found the oldest ${w('skull')} of &lt;em&gt;Homo erectus&lt;/em&gt; ever discovered. This species is a ${w('direct ancestor')} of modern humans.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;p&gt;This find means that &lt;em&gt;Homo erectus&lt;/em&gt; existed ${w('concurrently')} with two other human species 2 million years ago. This ${w('discovery')} also ${w('confirmed')} the ${w('theory')} that the ${w('origin')} of &lt;em&gt;Homo erectus&lt;/em&gt; was in Africa.&lt;/p&gt;`,</p>
+<p class="p2"><span class="Apple-converted-space">                    </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Original': `&lt;div class="space-y-4 text-gray-700 leading-relaxed italic border-l-4 border-indigo-200 pl-6 py-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                   </span>&lt;p&gt;The oldest ${w('skull')} to date of &lt;em&gt;Homo erectus&lt;/em&gt;, a ${w('direct ancestor')} of the ${w('modern human')}, has been found in South Africa. It is the first time that &lt;em&gt;Homo erectus&lt;/em&gt; has been found in South Africa.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                   </span>&lt;p&gt;This means not only that &lt;em&gt;Homo erectus&lt;/em&gt; is older than previously thought, but also that two million years ago, three ${w('species')} of ${w('hominins', 'hominin')} lived ${w('concurrently')} in South Africa. The find also ${w('confirmed')} the ${w('theory')} that &lt;em&gt;Homo erectus&lt;/em&gt; ${w('originated')} in Africa.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                 </span>&lt;/div&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>3: {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>title: "Australopithecus: Ape or Human?",</p>
+<p class="p1"><span class="Apple-converted-space">                </span>iconStr: 'History',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>sourceInfo: "Luc De Roy (vrtnws.be, Nov 26, 2021)",</p>
+<p class="p1"><span class="Apple-converted-space">                </span>levels: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'A1': `&lt;p&gt;Scientists studied an ${w('ancient relative')} called &lt;em&gt;Australopithecus sediba&lt;/em&gt;. This species lived 2 million years ago.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;p&gt;It was very special. It ${w('climbed')} trees like an ${w('ape')}, but it ${w('walked', 'walked')} on its legs like a human.&lt;/p&gt;`,</p>
+<p class="p2"><span class="Apple-converted-space">                    </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'A2': `&lt;p&gt;An ${w('international team')} of scientists studied &lt;em&gt;Australopithecus sediba&lt;/em&gt;, an ${w('ancient relative')} of humans from 2 million years ago.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;p&gt;Based on newly discovered fossil ${w('vertebrae')}, they found that this species used its arms to ${w('climb', 'climbed')} like an ${w('ape')}, but used its legs to walk like a human.&lt;/p&gt;`,</p>
+<p class="p2"><span class="Apple-converted-space">                    </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Original': `&lt;div class="space-y-4 text-gray-700 leading-relaxed italic border-l-4 border-indigo-200 pl-6 py-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                   </span>&lt;p&gt;The ${w('ancient')} human relative &lt;em&gt;Australopithecus sediba&lt;/em&gt; "walked like a human, but ${w('climbed')} like an ${w('ape')}."&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                   </span>&lt;p&gt;&lt;em&gt;Australopithecus sediba&lt;/em&gt;, a 2-million-year-old human relative, used its arms to climb like an ${w('ape')} and its legs to walk like a human. An ${w('international team')} of scientists stated this based on newly discovered ${w('fossil')} ${w('vertebrae')} of the species.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                 </span>&lt;/div&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>4: {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>title: "Fighting Food Waste in Europe",</p>
+<p class="p1"><span class="Apple-converted-space">                </span>iconStr: 'Leaf',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>sourceInfo: "fepex.es / biojournaal.nl (Sep 20, 2023)",</p>
+<p class="p1"><span class="Apple-converted-space">                </span>levels: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'A1': `&lt;p&gt;The European Commission wants a ${w('reduction')} in ${w('food waste')}. Their goal is 30% less waste by the year 2030.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;p&gt;Most waste (53%) happens in our &lt;strong&gt;homes&lt;/strong&gt;. This waste costs 132 billion euros. We must stop this ${w('economic loss')} to help the ${w('environment')}.&lt;/p&gt;`,</p>
+<p class="p2"><span class="Apple-converted-space">                    </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'A2': `&lt;p&gt;The European Commission has a new ${w('proposal')}. They want member states to cut ${w('food waste')} by 30% per person by 2030. Every year, we waste 89 million tons of food ${w('annually')}.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;p&gt;Research shows that 53% of waste occurs in ${w('households')}. This waste results in a huge ${w('economic loss')} of 132 billion euros.&lt;/p&gt;`,</p>
+<p class="p2"><span class="Apple-converted-space">                    </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Original': `&lt;div class="space-y-4 text-gray-700 leading-relaxed italic border-l-4 border-indigo-200 pl-6 py-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                   </span>&lt;p&gt;Europe wants to reduce ${w('food waste')} by 30%.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                   </span>&lt;p&gt;The European Commission wants the member states to reduce the waste of food by 30% per person by 2030.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                   </span>&lt;p&gt;The European Commission estimates that the majority of our ${w('food waste')}, 53%, occurs in ${w('households')}. The other 47% happens at supermarkets, restaurants and hotels, ${w('agriculture')}, and food processing and production.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                   </span>&lt;p&gt;This means that we waste approximately 89 million tons of food per year (= 131 kilos per inhabitant). This in turn leads to an ${w('economic loss')} of 132 billion euros... and that is without counting the impact on our ${w('environment')}.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                   </span>&lt;p&gt;Therefore, the European Commission proposes reducing the ${w('food waste')} per ${w('household', 'households')} by 30% between now and 2030. Other sectors will also have to contribute. This ${w('proposal')} contributes to reaching the ${w('Sustainable')} Development Goals of the United Nations.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                 </span>&lt;/div&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>5: {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>title: "Ancient Cave Art in Sulawesi",</p>
+<p class="p1"><span class="Apple-converted-space">                </span>iconStr: 'Palette',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>sourceInfo: "historiek.net (Oct 9, 2014)",</p>
+<p class="p1"><span class="Apple-converted-space">                </span>levels: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'A1': `&lt;p&gt;Scientists found 40,000 year old art in a cave in Indonesia. It is on an ${w('island')} called Sulawesi. It is the oldest ${w('cave paintings')} in the world.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;p&gt;Before this, people thought art started in Europe. But now we know it started in Asia too.&lt;/p&gt;`,</p>
+<p class="p2"><span class="Apple-converted-space">                    </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'A2': `&lt;p&gt;${w('Researchers')} discovered ${w('cave paintings')} in Sulawesi that are at least 40,000 years old. This makes them the oldest known cave art in the world.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;p&gt;${w('Uranium dating')} has now proven that some were created much earlier than we thought. Painting now appears not to be an exclusively European phenomenon.&lt;/p&gt;`,</p>
+<p class="p2"><span class="Apple-converted-space">                    </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Original': `&lt;div class="space-y-4 text-gray-700 leading-relaxed italic border-l-4 border-indigo-200 pl-6 py-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                   </span>&lt;p&gt;40,000-year-old art found on Sulawesi. In a cave on the Indonesian ${w('island')} of Sulawesi, ${w('researchers')} have found rock paintings that are said to be at least 40,000 years old. According to the researchers, this makes it the oldest known ${w('cave art', 'cave paintings')} in the world.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                   </span>&lt;p&gt;The existence of the paintings has been known for some time, but it was always assumed they were approximately 10,000 years old. ${w('Uranium dating')} has now shown, however, that some of the drawings were already made 40,000 years ago.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                   </span>&lt;p&gt;This is ${w('remarkable')}, because until now it was assumed that rock art ${w('originated')} in Europe. Painting now appears not to be an exclusively European phenomenon. The researchers, who published their findings in the magazine &lt;em&gt;Nature&lt;/em&gt;, even suggest that art possibly ${w('originated')} before humans ${w('spread')} from Africa. On Sulawesi, images of various hands have been found. The oldest appears to have been made 40,000 years ago and the youngest about 17,500 years ago. Images of animals have also been found.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                 </span>&lt;/div&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const levelsDef = [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ id: 'A1', label: 'A1 Beginner', iconStr: 'GraduationCap' },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ id: 'A2', label: 'A2 Elementary', iconStr: 'InfoSmall' },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ id: 'Original', label: 'Original Text (English)', iconStr: 'AlignLeft' }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- 3. STATE ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let currentSource = 1;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let currentLevel = 'A1';</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let activeWordData = null; // null of { word, ...dictionaryEntry, showTranslation: bool }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let isReadingFull = false;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let activeWordElement = null; // Refentie naar de HTML node</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- 4. DOM ELEMENTEN &amp; RENDER LOGICA ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const ui = {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>tabsContainer: document.getElementById('tabs-container'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>levelsContainer: document.getElementById('levels-container'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>textContent: document.getElementById('text-content'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>sourceTitle: document.getElementById('source-title'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>sourceSubtitle: document.getElementById('source-subtitle'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>sourceInfo: document.getElementById('source-info'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>headerIcon: document.getElementById('header-icon'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>headerBgIcon: document.getElementById('header-bg-icon'),</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>tooltip: document.getElementById('tooltip'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ttWord: document.getElementById('tt-word'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ttInfo: document.getElementById('tt-info'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ttTranslationContainer: document.getElementById('tt-translation-container'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ttArrow: document.getElementById('tt-arrow'),</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>readFullBtn: document.getElementById('read-full-btn'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>readFullIcon: document.getElementById('read-full-icon'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>readFullText: document.getElementById('read-full-text'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>appContainer: document.getElementById('app-container')</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function renderTabs() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ui.tabsContainer.innerHTML = '';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>[1, 2, 3, 4, 5].forEach(s =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const isSelected = currentSource === s;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const btn = document.createElement('button');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>btn.className = `flex items-center gap-2 px-6 py-2.5 rounded-2xl text-xs font-black transition-all whitespace-nowrap tracking-wider uppercase ${isSelected ? 'bg-indigo-600 text-white shadow-[0_5px_15px_rgba(0,0,0,0.3)] scale-105' : 'text-indigo-300 hover:bg-indigo-800/50 hover:text-white'}`;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>btn.innerHTML = `${icons.FileText} Source ${s}`;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>btn.onclick = () =&gt; {<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>currentSource = s;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>closeTooltip();</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>stopSpeech();</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>renderAll();<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>};</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ui.tabsContainer.appendChild(btn);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function renderLevels() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ui.levelsContainer.innerHTML = '';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>levelsDef.forEach(lvl =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const isSelected = currentLevel === lvl.id;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const btn = document.createElement('button');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>btn.className = `px-5 py-2.5 rounded-xl text-xs font-black transition-all duration-300 flex items-center gap-2 whitespace-nowrap ${isSelected ? 'bg-white shadow-xl text-indigo-700' : 'text-slate-500 hover:text-indigo-600'}`;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>btn.innerHTML = `${icons[lvl.iconStr]} ${lvl.label}`;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>btn.onclick = () =&gt; {<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>currentLevel = lvl.id;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>closeTooltip();</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>stopSpeech();</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>renderAll();<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>};</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ui.levelsContainer.appendChild(btn);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function renderContent() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const data = sourceContent[currentSource];</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Update Header</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ui.sourceTitle.innerText = data.title;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ui.sourceSubtitle.innerText = `Source ${currentSource}`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ui.headerIcon.innerHTML = icons[data.iconStr];</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ui.headerBgIcon.innerHTML = icons.HistoryLarge; // Achtergrond icoon</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Update Text</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ui.textContent.innerHTML = data.levels[currentLevel];</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ui.sourceInfo.innerText = `Original Source: ${data.sourceInfo}`;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Reset "Read Full" button status</p>
+<p class="p1"><span class="Apple-converted-space">            </span>updateReadFullButtonUI();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function renderAll() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>renderTabs();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>renderLevels();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>renderContent();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- 5. INTERACTIE (Tooltips &amp; Klikken) ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function closeTooltip() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (!activeWordData) return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>activeWordData = null;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ui.tooltip.classList.add('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (activeWordElement) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>activeWordElement.classList.remove('word-active');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>activeWordElement = null;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function handleWordClick(element, e) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>e.stopPropagation();</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const wordText = element.getAttribute('data-word');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const wordId = element.getAttribute('data-id');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const entry = dictionary[wordId];</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (!entry) return;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Als we op hetzelfde woord klikken...</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (activeWordData &amp;&amp; activeWordData.word === wordText) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (!activeWordData.showTranslation) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>// Tweede klik: Toon vertaling</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>activeWordData.showTranslation = true;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>renderTooltipContent();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>// Derde klik: Sluit tooltip</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>closeTooltip();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Nieuw woord aangeklikt</p>
+<p class="p1"><span class="Apple-converted-space">            </span>closeTooltip(); // Sluit eventueel vorig woord</p>
+<p class="p1"><span class="Apple-converted-space">            </span>activeWordElement = element;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>activeWordElement.classList.add('word-active');</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>activeWordData = {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>word: wordText,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>...entry,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>showTranslation: false</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>renderTooltipContent();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ui.tooltip.classList.remove('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>positionTooltip(element);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function renderTooltipContent() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (!activeWordData) return;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>ui.ttWord.innerText = activeWordData.word;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ui.ttInfo.innerText = `"${activeWordData.info}"`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (activeWordData.showTranslation) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ui.ttTranslationContainer.innerHTML = `</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex flex-col gap-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="flex items-center gap-2 mb-1 opacity-70"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                          </span>${icons.LanguagesYellow}</p>
+<p class="p1"><span class="Apple-converted-space">                          </span>&lt;span class="text-yellow-400 font-black text-[9px] uppercase tracking-[0.2em] italic"&gt;Dutch Translation&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-2xl font-black text-yellow-400 tracking-tight leading-none uppercase"&gt;${activeWordData.nl}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="flex items-center gap-2 mb-1 opacity-70"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                          </span>${icons.LanguagesEmerald}</p>
+<p class="p1"><span class="Apple-converted-space">                          </span>&lt;span class="text-emerald-400 font-black text-[9px] uppercase tracking-[0.2em] italic"&gt;French Translation&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-2xl font-black text-emerald-400 tracking-tight leading-none uppercase"&gt;${activeWordData.fr}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>`;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ui.ttTranslationContainer.classList.remove('opacity-0');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ui.ttTranslationContainer.innerHTML = `</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="text-[10px] font-black text-indigo-400 uppercase tracking-[0.2em] text-center italic cursor-pointer animate-pulse bg-indigo-900/40 py-3 rounded-xl border border-indigo-800 border-dashed" onclick="triggerTranslation()"&gt;Click again for Dutch &amp; French&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Helper voor de inline "Click again" knop</p>
+<p class="p1"><span class="Apple-converted-space">        </span>window.triggerTranslation = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if(activeWordData) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>activeWordData.showTranslation = true;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>renderTooltipContent();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function positionTooltip(targetElement) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const rect = targetElement.getBoundingClientRect();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const containerRect = ui.appContainer.getBoundingClientRect();</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const tooltipWidth = 320;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const padding = 20;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const containerWidth = ui.appContainer.offsetWidth;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const containerHeight = ui.appContainer.offsetHeight;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// X Positie</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let displayLeft = rect.left - containerRect.left + (rect.width / 2);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const minLeft = tooltipWidth / 2 + padding;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const maxLeft = containerWidth - (tooltipWidth / 2) - padding;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const constrainedLeft = Math.max(minLeft, Math.min(maxLeft, displayLeft));</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const arrowOffset = displayLeft - constrainedLeft;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Y Positie (van onderaf gemeten voor veilige expansie)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const topPosRelativeToContainer = rect.top - containerRect.top;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const bottomPos = containerHeight - topPosRelativeToContainer + 15;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>ui.tooltip.style.bottom = `${bottomPos}px`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ui.tooltip.style.left = `${constrainedLeft}px`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ui.ttArrow.style.left = `calc(50% + ${arrowOffset}px)`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Event delegatie voor de interactieve woorden en buitenkliks</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.addEventListener('click', (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const wordEl = e.target.closest('.word-interactive');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (wordEl) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>handleWordClick(wordEl, e);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else if (!e.target.closest('#tooltip')) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>closeTooltip();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- 6. TEXT TO SPEECH (Web Speech API) ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function loadVoices() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if ('speechSynthesis' in window) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>window.speechSynthesis.getVoices();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function getPreferredVoice() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const voices = window.speechSynthesis.getVoices();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return voices.find(v =&gt;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>v.lang === 'en-GB' &amp;&amp; (v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Daniel') || v.name.includes('Oliver') || v.name.includes('Serena'))</p>
+<p class="p1"><span class="Apple-converted-space">            </span>) || voices.find(v =&gt; v.lang === 'en-GB');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function speakWord(text, e) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>e.stopPropagation();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if ('speechSynthesis' in window) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>window.speechSynthesis.cancel();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>isReadingFull = false;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>updateReadFullButtonUI();</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>const utterance = new SpeechSynthesisUtterance(text);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>utterance.lang = 'en-GB';</p>
+<p class="p1"><span class="Apple-converted-space">                </span>utterance.rate = 0.85;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>const voice = getPreferredVoice();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (voice) utterance.voice = voice;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>window.speechSynthesis.speak(utterance);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('tt-speak').addEventListener('click', (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if(activeWordData) speakWord(activeWordData.word, e);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function toggleReadFullText(e) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>e.stopPropagation();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (!('speechSynthesis' in window)) return;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (isReadingFull) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>stopSpeech();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>window.speechSynthesis.cancel();</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Haal platte tekst op zonder HTML (vergelijkbaar met innerText in React ref)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const textToRead = ui.textContent.innerText || "";</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const utterance = new SpeechSynthesisUtterance(textToRead);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>utterance.lang = 'en-GB';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>utterance.rate = 0.85;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const voice = getPreferredVoice();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (voice) utterance.voice = voice;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>utterance.onend = () =&gt; { isReadingFull = false; updateReadFullButtonUI(); };</p>
+<p class="p1"><span class="Apple-converted-space">            </span>utterance.onerror = () =&gt; { isReadingFull = false; updateReadFullButtonUI(); };</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>isReadingFull = true;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>updateReadFullButtonUI();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>window.speechSynthesis.speak(utterance);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function stopSpeech() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if ('speechSynthesis' in window) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>window.speechSynthesis.cancel();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>isReadingFull = false;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>updateReadFullButtonUI();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function updateReadFullButtonUI() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (isReadingFull) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ui.readFullBtn.className = "flex items-center gap-2 px-5 py-2.5 rounded-full font-black text-[10px] uppercase tracking-widest transition-all bg-red-100 text-red-600 shadow-inner border border-red-200";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ui.readFullIcon.innerHTML = `&lt;span class="animate-pulse"&gt;${icons.VolumeX}&lt;/span&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ui.readFullText.innerText = "Stop reading";</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ui.readFullBtn.className = "flex items-center gap-2 px-5 py-2.5 rounded-full font-black text-[10px] uppercase tracking-widest transition-all bg-indigo-50 text-indigo-600 hover:bg-indigo-100 hover:shadow-md border border-indigo-100 hover:scale-105";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ui.readFullIcon.innerHTML = icons.Volume2Small;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ui.readFullText.innerText = "Read text";</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>ui.readFullBtn.addEventListener('click', toggleReadFullText);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- 7. INITIALISATIE ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>window.onload = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>loadVoices();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if ('speechSynthesis' in window) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>window.speechSynthesis.onvoiceschanged = loadVoices;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>renderAll();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Ruim TTS op als de gebruiker de pagina verlaat</p>
+<p class="p1"><span class="Apple-converted-space">        </span>window.addEventListener('beforeunload', () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if ('speechSynthesis' in window) window.speechSynthesis.cancel();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
